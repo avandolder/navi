@@ -2,27 +2,13 @@
 #include <stdarg.h>
 
 #include "console.h"
-
-// inportb provides a wrapper around the inb opcode.
-inline uint8_t
-inportb ( uint16_t port )
-{
-	uint8_t data;
-	asm volatile ( "inb %1, %0" : "=a" (data) : "Nd" (port) );
-	return data;
-}
-
-// outportb provides a wrapper around the outb opcode.
-inline void
-outportb ( uint16_t port, uint8_t data )
-{
-	asm volatile ( "outb %0, %1" : : "a" (data), "Nd" (port) );
-}
+#include "ioport.h"
 
 uint8_t* const CON_MEM = (uint8_t*) 0xB8000;
-int con_x, con_y, con_width, con_height, con_color;
-int cursor_x, cursor_y;
+int con_x, con_y, con_width, con_height, con_color, cursor_x, cursor_y;
 
+// console_init initializes the console driver with the width, height, and
+// color the console should be.
 void
 console_init ( int width, int height, int color )
 {

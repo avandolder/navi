@@ -34,4 +34,5 @@ enum vga4_color
 	COLOR_FG_MAX = COLOR_WHITE
 };
 
+// COLOR4 is a simple macro to allow for easier selecting of 4-bit color pairs.
 #define COLOR4(bg, fg) ((bg << 4) | fg)
