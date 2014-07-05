@@ -16,10 +16,4 @@ kernel_main ()
 #endif
 
 	console_printf("\tBooting...\n");
-
-	console_printf("%i ", -1234567890);
-	for(int i = 0; i < 5; i++)
-		console_printf("%i", 1234567890);
-
-	console_printf("\nMagic: %x%h", 0xDEADBEEF, 0xCAFE0101);
 }
