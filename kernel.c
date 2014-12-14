@@ -15,5 +15,5 @@ kernel_main ()
 	console_printf(" Build #%i", BUILDNUM);
 #endif
 
-	console_printf("\tBooting...\n");
+	console_printf("\nBooting...\n");
 }
