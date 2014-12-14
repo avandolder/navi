@@ -76,4 +76,3 @@ MB_CHECKSUM	equ -(MB_MAGIC + MB_FLAGS)
 
       .hang:
 	jmp	.hang
-

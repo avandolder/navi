@@ -21,14 +21,21 @@ console_init ( int width, int height, int color )
 	console_clear();
 }
 
+// console_color sets the current FG/BG colors of the console.
+void
+console_color (uint16_t color)
+{
+	con_color = color;
+}
+
 // console_cursor moves the hardware cursor.
 void
-console_cursor(int x, int y)
+console_cursor (int x, int y)
 {
 	cursor_x = x;
 	cursor_y = y;
 
-	int loc = (cursor_y * con_width) + cursor_x;
+	uint16_t loc = (cursor_y * con_width) + cursor_x;
 	// Tell the VGA board we are setting the high cursor byte.
 	outportb(0x3D4, 14);
 	// Send the high cursor byte.

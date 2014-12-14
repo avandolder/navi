@@ -1,0 +1,7 @@
+Goals for navi v1 release:
+	- Implement paging and at least basic memory management
+	- Be able to load/run binary executables (ELF)
+	- Have a working FAT driver (FAT32?)
+	- Port libc
+	- Have a functional shell
+	- Port some software (lua?)
