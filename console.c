@@ -23,14 +23,14 @@ console_init ( int width, int height, int color )
 
 // console_color sets the current FG/BG colors of the console.
 void
-console_color (uint16_t color)
+console_color ( uint16_t color )
 {
 	con_color = color;
 }
 
-// console_cursor moves the hardware cursor.
+// console_cursor moves the hardware cursor, but not the writing location.
 void
-console_cursor (int x, int y)
+console_cursor ( int x, int y )
 {
 	cursor_x = x;
 	cursor_y = y;
@@ -44,6 +44,25 @@ console_cursor (int x, int y)
 	outportb(0x3D4, 15);
 	// Send the low cursor byte.
 	outportb(0x3D5, loc);
+}
+
+// console_move moves the writing location, but not the cursor.
+void
+console_move ( int x, int y )
+{
+	if (con_x < con_width && con_x > 0)
+		con_x = x;
+	else if (con_x > con_width)
+		con_x = con_width;
+	else
+		con_x = 0;
+	
+	if (con_y < con_height && con_y > 0)
+		con_y = y;
+	else if (con_y > con_height)
+		con_y = con_height;
+	else
+		con_y = 0;
 }
 
 // console_clear clears the console.
@@ -153,7 +172,7 @@ console_puthex ( uint32_t number )
 void
 console_putstr ( const char* string )
 {
-	for (; *string != 0; string++)
+	for (; *string != '\0'; string++)
 		console_putchar(*string);
 }
 
@@ -163,7 +182,7 @@ console_printf ( const char* format, ... )
 	va_list args;
 	va_start(args, format);
 
-	for (; *format != 0; format++)
+	for (; *format != '\0'; format++)
 	{
 		/* If the character is the start of a format specifier,
 		 * figure out what format/data is required. */
@@ -173,7 +192,7 @@ console_printf ( const char* format, ... )
 			switch (*format)
 			{
 			case 'c':
-				console_putchar(*format);
+				console_putchar(va_arg(args, unsigned int));
 				break;
 
 			case 'i':
@@ -200,7 +219,7 @@ console_printf ( const char* format, ... )
 
 			default:
 				console_printf("Invalid console_printf format specifier %c.\n",
-							  *format);
+							   *format);
 				break;
 			}
 		}

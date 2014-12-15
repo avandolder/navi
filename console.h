@@ -3,6 +3,7 @@
 void console_init (int width, int height, int color);
 void console_color (uint16_t color);
 void console_cursor (int x, int y);
+void console_move (int x, int y);
 void console_clear ();
 void console_scroll ();
 void console_putnl ();

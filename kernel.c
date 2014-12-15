@@ -12,7 +12,7 @@ kernel_main ()
 
 #ifdef BUILDNUM
 	// BUILDNUM was defined on the commandline.
-	console_printf(" Build #%i", BUILDNUM);
+	console_printf("\tBuild #%i", BUILDNUM);
 #endif
 
 	console_printf("\nBooting...\n");
