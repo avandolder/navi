@@ -4,9 +4,9 @@ void console_init (int width, int height, int color);
 void console_color (uint16_t color);
 void console_cursor (int x, int y);
 void console_move (int x, int y);
-void console_clear ();
-void console_scroll ();
-void console_putnl ();
+void console_clear (void);
+void console_scroll (void);
+void console_putnl (void);
 void console_putchar (uint8_t character);
 void console_putuint (uint32_t number);
 void console_putint (int32_t number);
@@ -38,3 +38,4 @@ enum vga4_color
 
 // COLOR4 is a simple macro to allow for easier selecting of 4-bit color pairs.
 #define COLOR4(bg, fg) ((bg << 4) | fg)
+

@@ -1,3 +1,6 @@
+#ifndef IOPORT_H
+#define IOPORT_H
+
 #include <stdint.h>
 
 // inportb provides a wrapper around the inb opcode.
@@ -47,3 +50,6 @@ outportl ( uint16_t port, uint32_t data )
 {
 	asm volatile ( "outl %0, %1" : : "a" (data), "Nd" (port) );
 }
+
+#endif /* IOPORT_H */
+

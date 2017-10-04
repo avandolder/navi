@@ -67,10 +67,9 @@ console_move ( int x, int y )
 
 // console_clear clears the console.
 void
-console_clear ()
+console_clear ( void )
 {
-	for (int i = 0; i < (con_width * con_height); i++)
-	{
+	for (int i = 0; i < (con_width * con_height); i++) {
 		CON_MEM[i * 2] = ' ';
 		CON_MEM[i * 2 + 1] = con_color;
 	}
@@ -78,13 +77,12 @@ console_clear ()
 
 // console_scroll scrolls the console up one row.
 void
-console_scroll ()
+console_scroll ( void )
 {
 	// Loop over every row except the first
 	for (int y = 1; y < con_height; y++)
 		// Loop over every column
-		for (int x = 0; x < con_width; x++)
-		{
+		for (int x = 0; x < con_width; x++) {
 			int src = ((y * con_width) + x) * 2;
 			int dst = src - con_width;
 			
@@ -93,8 +91,7 @@ console_scroll ()
 		}
 	
 	// Clear out the new bottom row
-	for (int x = 0; x < con_width; x++)
-	{
+	for (int x = 0; x < con_width; x++) {
 		int dst = (((con_height - 1) * con_width) + x) * 2;
 		CON_MEM[dst] = ' ';
 		CON_MEM[dst + 1] = con_color;
@@ -102,11 +99,10 @@ console_scroll ()
 }
 
 void
-console_putnl ()
+console_putnl ( void )
 {
 	con_x = 0;
-	if (++con_y == con_height)
-	{
+	if (++con_y == con_height) {
 		con_y = con_height - 1;
 		console_scroll();
 	}
@@ -115,15 +111,14 @@ console_putnl ()
 void
 console_putchar ( uint8_t character )
 {
-	// Go to the next line if character is a new line.
+	// Go to the next line if character is an escaped new line.
 	if (character == '\n')
 		console_putnl();
 	// Skip ahead to the next number divisible by 8 for a tab character.
 	else if (character == '\t')
 		con_x = con_x + (-((con_x % 8 ?: 8) - 8) ?: 8);
 	// Print out any other character to the screen.
-	else
-	{
+	else {
 		uint32_t dst = ((con_y * con_width) + con_x) * 2;	
 		CON_MEM[dst] = character;
 		CON_MEM[dst + 1] = con_color;
@@ -148,8 +143,7 @@ console_putuint ( uint32_t number )
 void
 console_putint ( int32_t number )
 {
-	if (number < 0)
-	{
+	if (number < 0) {
 		console_putchar('-');
 		console_putuint(-number);
 	}
@@ -182,15 +176,12 @@ console_printf ( const char* format, ... )
 	va_list args;
 	va_start(args, format);
 
-	for (; *format != '\0'; format++)
-	{
+	for (; *format != '\0'; format++) {
 		/* If the character is the start of a format specifier,
 		 * figure out what format/data is required. */
-		if (*format == '%')
-		{
+		if (*format == '%')	{
 			format++;
-			switch (*format)
-			{
+			switch (*format) {
 			case 'c':
 				console_putchar(va_arg(args, unsigned int));
 				break;
@@ -229,3 +220,4 @@ console_printf ( const char* format, ... )
 
 	va_end(args);
 }
+
